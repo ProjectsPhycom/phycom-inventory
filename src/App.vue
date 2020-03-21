@@ -1,12 +1,35 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app id="app">
+    <v-container class="fill-height" fluid>
+      <router-view />
+      <error-dialog
+        :active="error.active"
+        :title="error.title"
+        :text="error.text"
+        v-on:ok="onOk"
+      ></error-dialog>
+    </v-container>
+  </v-app>
 </template>
+
+<script>
+export default {
+  computed: {
+    error() {
+      return this.$store.getters.error;
+    },
+  },
+  methods: {
+    onOk() {
+      this.$store.commit("setError", {
+        active: false,
+        title: "",
+        text: "",
+      });
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
