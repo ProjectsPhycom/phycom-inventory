@@ -20,3 +20,13 @@ export async function loginService(payload) {
   StorageService.saveToken(response.data.data.token);
   return response.data.data;
 }
+
+/**
+ * Logout request to the server
+ */
+export async function logoutService() {
+  const url = BASE_URL + routes.LOGOUT;
+  const response = await ApiServcie.postApi(url, {});
+  StorageService.removeToken();
+  return response.data.data;
+}

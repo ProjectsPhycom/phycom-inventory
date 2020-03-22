@@ -5,16 +5,28 @@ Vue.use(Router);
 
 import Login from "../views/Login.vue";
 
+import MainLayout from "../layouts/MainLayout.vue";
+
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Login,
+    redirect: "/login",
   },
   {
     path: "/login",
     name: "login",
     component: Login,
+  },
+  {
+    path: "/panel",
+    component: MainLayout,
+    children: [
+      {
+        path: "/panel/materials",
+        component: () => import("../views/Items.vue"),
+        name: "materials",
+      },
+    ],
   },
 ];
 

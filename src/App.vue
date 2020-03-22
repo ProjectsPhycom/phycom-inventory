@@ -1,14 +1,12 @@
 <template>
   <v-app id="app">
-    <v-container class="fill-height" fluid>
-      <router-view />
-      <error-dialog
-        :active="error.active"
-        :title="error.title"
-        :text="error.text"
-        v-on:ok="onOk"
-      ></error-dialog>
-    </v-container>
+    <router-view />
+    <error-dialog
+      :active="error.active"
+      :title="error.title"
+      :text="error.text"
+      v-on:ok="onOk"
+    ></error-dialog>
   </v-app>
 </template>
 

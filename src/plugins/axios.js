@@ -1,5 +1,14 @@
 import axios from "axios";
 import Vue from "vue";
+import StorageService from "../services/storage.service";
+
+axios.interceptors.request.use(request => {
+  const token = StorageService.getToken();
+  if (token) {
+    request.headers.common["x-access-token"] = token;
+  }
+  return request;
+});
 
 axios.interceptors.response.use(
   response => {

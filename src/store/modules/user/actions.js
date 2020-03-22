@@ -1,4 +1,7 @@
-import { loginService } from "../../../services/authentication.service";
+import {
+  loginService,
+  logoutService,
+} from "../../../services/authentication.service";
 
 export async function loginAction({ commit }, payload) {
   try {
@@ -14,4 +17,14 @@ export async function loginAction({ commit }, payload) {
     commit("setError", errorPayload, { root: true });
     throw error;
   }
+}
+
+/**
+ * Logout from the application
+ * @description
+ * Request logout to server and clear user data from store.
+ */
+export async function logoutAction({ commit }) {
+  await logoutService();
+  commit("clearUser");
 }
