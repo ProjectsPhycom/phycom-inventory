@@ -26,6 +26,11 @@ const routes = [
         component: () => import("../views/Items.vue"),
         name: "materials",
       },
+      {
+        path: "/panel/materials/register",
+        component: () => import("../views/NewItem.vue"),
+        name: "newMaterial",
+      },
     ],
   },
 ];

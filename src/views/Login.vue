@@ -12,7 +12,7 @@
                 prepend-icon="fa-user"
                 type="text"
                 v-model="email"
-                :rules="emailRules"
+                :rules="rules.login.email"
               />
               <v-text-field
                 id="password"
@@ -23,7 +23,7 @@
                 :append-icon="showPassword ? 'fa-eye' : 'fa-eye-slash'"
                 @click:append="showPassword = !showPassword"
                 v-model="password"
-                :rules="passwordRules"
+                :rules="rules.login.password"
               />
               <v-row>
                 <v-col class="pa-0 pr-3">
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import FormMixin from "../mixins/FormMixin";
 export default {
   data() {
     return {
@@ -59,11 +60,6 @@ export default {
       loading: false,
       email: "",
       password: "",
-      emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid",
-      ],
-      passwordRules: [v => !!v || "Password is required"],
       formValid: false,
     };
   },
@@ -89,5 +85,6 @@ export default {
       }
     },
   },
+  mixins: [FormMixin],
 };
 </script>

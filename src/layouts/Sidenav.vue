@@ -15,11 +15,26 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list-item v-for="route in routes" :key="route.href" :href="route.href">
-        <v-list-item-content>
-          <v-list-item-title>{{ route.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-list-group
+        v-for="route in routes"
+        :key="route.to"
+        :to="{ name: route.to }"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title>{{ route.title }}</v-list-item-title>
+          </v-list-item-content>
+        </template>
+        <v-list-item
+          v-for="child in route.children"
+          :key="'child-' + child.to"
+          :to="{ name: child.to }"
+        >
+          <v-list-item-content>
+            <v-list-item-title>{{ child.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
       <v-list-item @click="logout">
         <v-list-item-content>
           <v-list-item-title>Cerrar Sesión</v-list-item-title>
@@ -39,7 +54,17 @@ export default {
       routes: [
         {
           title: "Materiales",
-          href: "/panel/materials",
+          to: "materials",
+          children: [
+            {
+              title: "Ver Materiales",
+              to: "materials",
+            },
+            {
+              title: "Ingresar Materiales",
+              to: "newMaterial",
+            },
+          ],
         },
       ],
     };

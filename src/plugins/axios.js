@@ -3,9 +3,14 @@ import Vue from "vue";
 import StorageService from "../services/storage.service";
 
 axios.interceptors.request.use(request => {
-  const token = StorageService.getToken();
-  if (token) {
-    request.headers.common["x-access-token"] = token;
+  const isImgur = request.url.includes("imgur");
+  if (isImgur) {
+    delete request.headers.common["x-access-token"];
+  } else {
+    const token = StorageService.getToken();
+    if (token) {
+      request.headers.common["x-access-token"] = token;
+    }
   }
   return request;
 });
