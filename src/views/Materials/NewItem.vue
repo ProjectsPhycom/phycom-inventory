@@ -116,11 +116,11 @@
 </template>
 
 <script>
-import FormMixin from "../mixins/FormMixin";
+import FormMixin from "../../mixins/FormMixin";
 
 import ImageInput from "@/components/ImageInput.vue";
 
-import { createItemService } from "../services/item.service";
+import { createItemService } from "../../services/item.service";
 export default {
   data() {
     return {

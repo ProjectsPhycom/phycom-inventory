@@ -11,6 +11,9 @@ import "./plugins/axios";
 // GLOBAL COMPONENTS
 import ErrorDialog from "./components/ErrorDialog";
 
+// FILTERS
+import "./filters";
+
 Vue.component("error-dialog", ErrorDialog);
 
 Vue.config.productionTip = false;
