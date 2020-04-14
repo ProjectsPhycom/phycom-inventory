@@ -12,6 +12,7 @@ export default new Vuex.Store({
     items,
   },
   state: {
+    isLoggedIn: false,
     error: {
       active: false,
       title: "",
@@ -20,10 +21,14 @@ export default new Vuex.Store({
   },
   getters: {
     error: state => state.error,
+    isLoggedIn: state => state.isLoggedIn,
   },
   mutations: {
     setError: (state, payload) => {
       state.error = payload;
+    },
+    setIsLoggedIn: (state, payload) => {
+      state.isLoggedIn = payload;
     },
   },
 });

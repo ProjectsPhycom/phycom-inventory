@@ -9,6 +9,7 @@ export const BASE_URL = process.env.VUE_APP_API_URL;
 export const routes = {
   LOGIN: "/api/login",
   LOGOUT: "/api/logout",
+  GET_USER_DATA: "/api/users/getUserData",
 
   CREATE_ITEM: "/api/items/createItem",
   GET_ITEMS: "/api/items/getItems",

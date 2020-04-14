@@ -21,7 +21,7 @@ export async function uploadImage(image) {
     const response = await ApiService.postApi(url, formData, options);
     return response.data.data;
   } catch (error) {
-    console.error(error)
+    console.error(error);
     if (error.body && error.body.data && error.body.data.error) {
       return Promise.reject(error.body.data.error);
     } else {

@@ -75,8 +75,14 @@ export default {
     },
   },
   methods: {
-    logout() {
-      this.$store.dispatch("user/logoutAction");
+    async logout() {
+      try {
+        await this.$store.dispatch("user/logoutAction");
+        this.$router.push("/login");
+      } catch (error) {
+        console.log(error);
+        this.$router.push("/login");
+      }
     },
   },
 };

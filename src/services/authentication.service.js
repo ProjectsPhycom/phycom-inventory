@@ -30,3 +30,12 @@ export async function logoutService() {
   StorageService.removeToken();
   return response.data.data;
 }
+
+/**
+ * Get data from the user logged in
+ */
+export async function getUserDataService() {
+  const url = BASE_URL + routes.GET_USER_DATA;
+  const response = await ApiServcie.getApi(url, {});
+  return response.data.data;
+}
