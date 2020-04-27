@@ -39,9 +39,9 @@
             <v-btn
               outlined
               color="indigo"
-              @click="search()"
               :loading="loading"
               :disabled="loading"
+              @click="search()"
             >
               <v-icon>fa-search</v-icon>
             </v-btn>
@@ -49,43 +49,35 @@
         </v-row>
       </v-card-text>
     </v-card>
-    <!-- Items -->
+    <!-- Users -->
     <v-card class="mt-5">
       <v-card-text>
-        <v-list three-line>
-          <template v-for="item in items">
-            <v-list-item :key="'item-' + item.id" @click="goToItem(item)">
-              <v-list-item-avatar width="60" height="60">
-                <p
-                  class="quantity"
-                  :class="getQuantityClass(item.total, item.onLoan)"
-                >
-                  {{ item.total - item.onLoan }}
-                </p>
-              </v-list-item-avatar>
-              <v-list-item-avatar width="60" height="60" class="mr-5">
-                <v-img :src="item.image"></v-img>
-              </v-list-item-avatar>
-              <v-list-item-content class="text-justify">
-                <v-list-item-title>
-                  {{ item.name }} -
-                  <v-chip
-                    class="ma-2"
-                    :color="getChipColor(item.status)"
-                    outlined
-                    small
-                  >
-                    {{ item.status | parseStatus }}
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">Nombres</th>
+                <th class="text-left">Apellidos</th>
+                <th class="text-left">Email</th>
+                <th class="text-left">Rol</th>
+                <th class="text-left">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in users" :key="user.id">
+                <td class="text-left">{{ user.name }}</td>
+                <td class="text-left">{{ user.lastName }}</td>
+                <td class="text-left">{{ user.email }}</td>
+                <td class="text-left">{{ user.role.name }}</td>
+                <td class="text-left">
+                  <v-chip :color="getChipColor(user.status)" outlined small>
+                    {{ user.status | parseStatus }}
                   </v-chip>
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                  {{ item.description }}
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider :key="'divider-' + item.id"></v-divider>
+                </td>
+              </tr>
+            </tbody>
           </template>
-        </v-list>
+        </v-simple-table>
       </v-card-text>
     </v-card>
     <v-pagination
@@ -101,7 +93,7 @@
 <script>
 export default {
   created() {
-    this.getItems(
+    this.getUsers(
       this.limit,
       this.skip,
       this.searchText,
@@ -128,10 +120,16 @@ export default {
           iconDesc: "fa-sort-alpha-down",
         },
         {
-          value: "total",
-          text: "Cantidad",
-          iconAsc: "fa-sort-numeric-up",
-          iconDesc: "fa-sort-numeric-down",
+          value: "lastName",
+          text: "Apellido",
+          iconAsc: "fa-sort-alpha-up",
+          iconDesc: "fa-sort-alpha-down",
+        },
+        {
+          value: "email",
+          text: "Email",
+          iconAsc: "fa-sort-alpha-up",
+          iconDesc: "fa-sort-alpha-down",
         },
       ],
       sortOrientationOptions: [
@@ -155,7 +153,7 @@ export default {
     search() {
       this.skip = 0;
       this.page = 1;
-      this.getItems(
+      this.getUsers(
         this.limit,
         this.skip,
         this.searchText,
@@ -166,7 +164,7 @@ export default {
     /** Controls page change */
     onInput(param) {
       const skip = (param - 1) * this.limit;
-      this.getItems(
+      this.getUsers(
         this.limit,
         skip,
         this.searchText,
@@ -174,7 +172,7 @@ export default {
         this.sortOrientation,
       );
     },
-    async getItems(limit, skip, searchText, orderBy, orderDirection) {
+    async getUsers(limit, skip, searchText, orderBy, orderDirection) {
       try {
         this.loading = true;
         const payload = { limit, skip };
@@ -190,15 +188,16 @@ export default {
           payload.orderBy = orderBy;
           payload.orderDirection = orderDirection;
         }
-        await this.$store.dispatch("items/getItemsAction", payload);
+        await this.$store.dispatch("users/getUsersAction", payload);
         this.loading = false;
       } catch (error) {
         this.loading = false;
+        console.error(error);
       }
     },
     getChipColor(value) {
       switch (value) {
-        case "NEW":
+        case "ACTIVE":
           return "primary";
         default:
           return "";
@@ -216,17 +215,13 @@ export default {
         return "green--text";
       }
     },
-    goToItem(item) {
-      this.$store.commit("items/setSelectedItem", item);
-      this.$router.push({ name: "checkMaterial" });
-    },
   },
   computed: {
-    items() {
-      return this.$store.getters["items/items"];
+    users() {
+      return this.$store.getters["users/users"];
     },
     total() {
-      return this.$store.getters["items/count"];
+      return this.$store.getters["users/count"];
     },
   },
 };

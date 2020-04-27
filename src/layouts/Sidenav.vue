@@ -66,6 +66,16 @@ export default {
             },
           ],
         },
+        {
+          title: "Usuarios",
+          to: "users",
+          children: [
+            {
+              title: "Ver Usuarios",
+              to: "users",
+            },
+          ],
+        },
       ],
     };
   },

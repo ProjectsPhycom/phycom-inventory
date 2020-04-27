@@ -60,6 +60,14 @@ const routes = [
           requiresLogin: true,
         },
       },
+      {
+        path: "/panel/users",
+        component: () => import("../views/Users/Users.vue"),
+        name: "users",
+        meta: {
+          requiresLogin: true,
+        },
+      },
     ],
   },
 ];

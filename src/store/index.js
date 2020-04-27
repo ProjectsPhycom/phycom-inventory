@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import user from "./modules/user";
 import items from "./modules/items";
+import users from "./modules/users";
 
 Vue.use(Vuex);
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
   modules: {
     user,
     items,
+    users,
   },
   state: {
     isLoggedIn: false,

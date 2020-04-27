@@ -16,4 +16,6 @@ export const routes = {
   UPDATE_ITEM: "/api/items/updateItem",
 
   UPLOAD_IMAGE: "https://api.imgur.com/3/image",
+
+  GET_USERS: "/api/admin/getUsers",
 };
