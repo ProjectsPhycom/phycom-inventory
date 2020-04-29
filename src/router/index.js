@@ -68,6 +68,6 @@ const router = new Router({
   routes,
 });
 
-router.beforeEach(AuthGuard.generalGuard);
+// router.beforeEach(AuthGuard.generalGuard);
 
 export default router;
