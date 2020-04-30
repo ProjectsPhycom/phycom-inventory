@@ -4,7 +4,7 @@
     <v-card>
       <v-card-text class="py-1">
         <v-row align="center">
-          <v-col cols="12" sm="12" md="12" lg="6" class="py-3">
+          <v-col cols="12" sm="12" md="12" lg="5" class="py-3">
             <v-text-field
               outlined
               dense
@@ -35,10 +35,15 @@
               :items="sortOrientationOptions"
             ></v-select>
           </v-col>
-          <v-col cols="12" sm="12" md="12" lg="2" class="py-3">
+          <v-col cols="12" xs="6" sm="6" md="12" lg="2" class="py-3">
             <v-btn outlined color="indigo" @click="search()">
               <v-icon>fa-search</v-icon>
             </v-btn>
+          </v-col>
+          <v-col cols="12" xs="6" sm="6" md="12" lg="1" class="py-3">
+            <div @click="toLending()">
+              <v-icon class="pr" small> fa-shopping-cart </v-icon>
+            </div>
           </v-col>
         </v-row>
       </v-card-text>
@@ -155,6 +160,9 @@ export default {
         this.sort.value,
         this.sortOrientation,
       );
+    },
+    toLending() {
+      this.$router.push({ name: "lendMaterial" });
     },
     /** Controls page change */
     onInput(param) {

@@ -1,4 +1,3 @@
-
 <template>
   <v-container class="fill-height" fluid>
     <v-row align="center" justify="center">
@@ -18,18 +17,23 @@
                 />
               </div>
               <div class="btn-flex">
-                 <v-icon class="pr" small> fa-lock </v-icon>
+                <v-icon class="pr" small> fa-lock </v-icon>
                 <v-text-field
                   id="password"
                   label="Password"
                   name="password"
-                  :type="showPassword ? 'text' : 'password'"                  
+                  :type="showPassword ? 'text' : 'password'"
                   v-model="password"
                   :rules="rules.login.password"
                 />
-                <v-icon @click="showPassword = !showPassword" class="pl" small :ripple="false" >
-                  {{ showPassword ? 'fa-eye' : 'fa-eye-slash' }}
-                </v-icon> 
+                <v-icon
+                  @click="showPassword = !showPassword"
+                  class="pl"
+                  small
+                  :ripple="false"
+                >
+                  {{ showPassword ? "fa-eye" : "fa-eye-slash" }}
+                </v-icon>
               </div>
               <v-row>
                 <v-col class="pa-0 pr-3">
@@ -40,14 +44,15 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-              <v-btn
-                color="primary"
-                block
-                :loading="loading"
-                :disabled="disabled"
-                @click="login"
-                > Iniciar sesión </v-btn
-              >
+            <v-btn
+              color="primary"
+              block
+              :loading="loading"
+              :disabled="disabled"
+              @click="login"
+            >
+              Iniciar sesión
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -61,49 +66,49 @@
   flex-direction: row;
 }
 .pl {
-  padding-left: 0.50rem;
+  padding-left: 0.5rem;
 }
 .pr {
-  padding-right: 0.50rem;
+  padding-right: 0.5rem;
 }
 </style>
 
 <script>
-  import FormMixin from "../mixins/FormMixin";
-  export default {
-    data() {
-      return {
-        logo:
-          "https://s3.eu-west-1.amazonaws.com/picker-bkt/production/user/original_97GYVhZoTw1584807625319.jfif",
-        showPassword: false,
-        loading: false,
-        email: "",
-        password: "",
-        formValid: false,
-      };
+import FormMixin from "../mixins/FormMixin";
+export default {
+  data() {
+    return {
+      logo:
+        "https://s3.eu-west-1.amazonaws.com/picker-bkt/production/user/original_97GYVhZoTw1584807625319.jfif",
+      showPassword: false,
+      loading: false,
+      email: "",
+      password: "",
+      formValid: false,
+    };
+  },
+  computed: {
+    disabled() {
+      return this.loading || !this.formValid;
     },
-    computed: {
-      disabled() {
-        return this.loading || !this.formValid;
-      },
+  },
+  methods: {
+    async login() {
+      try {
+        this.loading = true;
+        const payload = {
+          email: this.email,
+          password: this.password,
+        };
+        await this.$store.dispatch("user/loginAction", payload);
+        this.$router.push({ name: "materials" });
+        this.loading = false;
+      } catch (error) {
+        console.error(error);
+        this.loading = false;
+      }
     },
-    methods: {
-      async login() {
-        try {
-          this.loading = true;
-          const payload = {
-            email: this.email,
-            password: this.password,
-          };
-          await this.$store.dispatch("user/loginAction", payload);
-          this.$router.push({ name: "materials" });
-          this.loading = false;
-        } catch (error) {
-          console.error(error);
-          this.loading = false;
-        }
-      },
-    },
-    mixins: [FormMixin],
-  };
+  },
+  mixins: [FormMixin],
+};
 </script>

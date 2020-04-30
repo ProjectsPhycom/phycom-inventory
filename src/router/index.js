@@ -60,6 +60,14 @@ const routes = [
           requiresLogin: true,
         },
       },
+      {
+        path: "/panel/materials/lend",
+        component: () => import("../views/Lending/Lending.vue"),
+        name: "lendMaterial",
+        meta: {
+          requiresLogin: true,
+        },
+      },
     ],
   },
 ];
@@ -68,6 +76,6 @@ const router = new Router({
   routes,
 });
 
-// router.beforeEach(AuthGuard.generalGuard);
+router.beforeEach(AuthGuard.generalGuard);
 
 export default router;
